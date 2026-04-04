@@ -53,9 +53,6 @@ class Solution:
         output.reverse()  # Reverse to get correct order
         return output
 
-    # Test the function
-    print(calculate_array_sum(list_a, list_b))  # Should output [2, 5, 0, 0]
-
     # ------------------------------------------------------------------------------------------------------------
 
     # Problem 3: Contains Duplicate
@@ -67,7 +64,23 @@ class Solution:
     # Input: nums = [1, 2, 3, 4]
     # Output: false
 
+    def has_duplicates(self) -> bool:
+        nums = [1, 2, 3, 3]
+        hashset = set()
 
-    nums = [1, 2, 3, 3]
-    def hasDuplicate(self, nums: list[int]) -> bool:
-        return
+        for i in range(len(nums)):
+            if nums[i] in hashset:
+                print(f"Found duplicate: {nums[i]}")
+                return True
+            else:
+                hashset.add(nums[i])
+
+        print("No duplicates ")
+        return False
+
+    # Using a hashset is the optimal data structure because it has a O(1) lookup, vs an array O(n)
+    # Sorting the array would have been another solution but that is O(n log n), slower.
+
+
+solution = Solution()
+solution.has_duplicates()
