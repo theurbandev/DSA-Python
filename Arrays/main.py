@@ -8,15 +8,8 @@ def algo1():
             print(myList[pointer1],myList[pointer2])
             if myList[pointer1] == myList[pointer2]:
                 print("Found em'")
-# O(n long n)
-def algo2():
-    for pointer1 in range(len(myList)):
-        for pointer2 in range(pointer1+1, len(myList)):
-            if myList[pointer1] != myList[pointer2]:
-                pointer2 = pointer2+1
 
 # algo1()
-# algo2()
 
 # ------------------------------------------------------------------------------------------------------------
 
@@ -41,12 +34,14 @@ def calculate_array_sum(listA, listB):
         val_a = listA[i] if i >= 0 else 0 # val_a is the value of index we're on in the array if the index were on is greater than or 0, otherwise it's 0 (if we go out of bounds)
         val_b = listB[j] if j >= 0 else 0 # val_b is the value of index we're on in the array if the index were on is greater than or 0, otherwise it's 0 (if we go out of bounds)
 
-        total = val_a + val_b # Calculate the total first
-        carry = total // 10  # Update carry
+        if carry > 0 and i < 0:
+            output.append(carry)
+            output.reverse()# If carry exists and val_b exists but val_a is 0, we can just append the carry to the output (e.g. carry=1, val_b=5, val_a=0 becomes 15, so we can just append the carry of 1 to the output)
+            return output
 
-        if carry > 0: # If the carry is greater than 0, we need to add it to the value of the current index in listA before adding it to the value of the current index in listB
-            val_c = val_a + carry
-            total = val_c + val_a
+        val_a = carry * 10 + val_a if carry > 0 else val_a # If carry exists, prepend it to val_a (e.g. carry=1, val_a=5 becomes 15)
+        total = val_a + val_b # Calculate the total
+        carry = total // 10  # Update carry for the next iteration
 
         output.append(total % 10)  # Append ones digit
 
@@ -57,7 +52,7 @@ def calculate_array_sum(listA, listB):
     return output
 
 # Test the function
-print(calculate_array_sum(listA, listB))  # Should output [1, 5, 0, 0]
+print(calculate_array_sum(listA, listB))  # Should output [2, 5, 0, 0]
 
 # ------------------------------------------------------------------------------------------------------------
 
